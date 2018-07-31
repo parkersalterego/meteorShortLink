@@ -3,9 +3,15 @@ import { Redirect } from  'react-router-dom';
 
 
 export default class Links extends React.Component {
-    state = {
-        toRoot: false,
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            toRoot: false,
+        }
     }
+
     logout() {
         this.setState({
             toRoot: true
@@ -16,7 +22,6 @@ export default class Links extends React.Component {
             return <Redirect to="/" />
         } else {
             return (
-
                 <div>
                     <h1>Your Links</h1>
     
