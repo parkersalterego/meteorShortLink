@@ -1,21 +1,17 @@
 import React from 'react';
-import { Router, Route, Switch } from 'react-router';
-import createBrowserHistory from 'history/createBrowserHistory';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
 // COMPONENTS
-import Link from './Link';
+import Links from './Links';
 import Login from './Login';
 import Signup from './Signup';
 import NotFound from './NotFound';
 
-const browserHistory = createBrowserHistory();
-window.browserHistory = browserHistory;
-
 export const renderRoutes = () => (
-    <Router history={browserHistory}>
+    <Router>
       <Switch>
         <Route exact path="/"  component={Login}/>
-        <Route exact path="/links" component ={Link}/>
+        <Route exact path="/links"  component={Links}/>
         <Route exact path="/signup"  component={Signup}/>
         <Route path="*" component={NotFound}/>
       </Switch>
