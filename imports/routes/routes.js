@@ -3,7 +3,7 @@ import history from '../ui/history';
 import {Router, Route, Switch} from 'react-router-dom';
 
 // COMPONENTS
-import Links from '../ui/Links';
+import Link from '../ui/Link';
 import Login from '../ui/Login';
 import Signup from '../ui/Signup';
 import NotFound from '../ui/NotFound';
@@ -30,7 +30,7 @@ export const renderRoutes = () => (
     <Switch>
       <Route exact path="/" component={Login}/>
       <Route exact path="/signup"  component={Signup} />
-      <Route exact path="/links"  component={Links}/>
+      <Route exact path="/links"  component={Link}/>
       <Route path="*" component={NotFound}/>
     </Switch>
   </Router>
