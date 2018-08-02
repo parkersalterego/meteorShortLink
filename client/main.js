@@ -28,13 +28,7 @@ Tracker.autorun(() => {
   }
 });
 
-const onEnterPublicPage = () => {
-  if (Meteor.userId()) {
-    history.push('/links');
-  }
-};
-
-// routes 
+// routes
 const renderRoutes = () => (
   <Router history={history}>
     <Switch>

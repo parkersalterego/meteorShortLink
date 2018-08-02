@@ -17,7 +17,7 @@ export default class Signup extends React.Component {
 
   componentWillMount() {
     if (Meteor.userId()) {
-        history.push('/links');
+        history.replace('/links');
     }
   }
 
@@ -27,9 +27,16 @@ export default class Signup extends React.Component {
     let email = this.refs.email.value.trim();
     let password = this.refs.password.value.trim();
 
+    if (password.length < 7) {
+      return this.setState({error: 'Password must be more than 7 characters long'});
+    }
+
     Accounts.createUser({email, password}, (err) => {
-      console.log('Signup Callback', err);
-      
+      if (err) {
+        this.setState({error: err.reason});
+      } else {
+        this.setState({error: ''});
+      }
     });
 
   }
@@ -39,9 +46,9 @@ export default class Signup extends React.Component {
     <div>
       <h1>Join Short Link</h1>
 
-      {this.state.error ? <p>{this.state.error}</p> : undefined}
+      {this.state.error ? <p className='error-message'>{this.state.error}</p> : undefined}
 
-      <form onSubmit={this.onSubmit.bind(this)}>
+      <form onSubmit={this.onSubmit.bind(this)} noValidate>
         <input type="email" ref="email" name="email" placeholder="Email"/>
         <input type="password" ref="password" name="password" placeholder="Password"/>
         <button>Create Account</button>
