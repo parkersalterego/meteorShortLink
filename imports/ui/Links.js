@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect } from  'react-router-dom';
+import { Acounts } from 'meteor/accounts-base'
 
 
 export default class Links extends React.Component {
@@ -13,6 +14,7 @@ export default class Links extends React.Component {
     }
 
     logout() {
+        Accounts.logout();
         this.setState({
             toRoot: true
         });

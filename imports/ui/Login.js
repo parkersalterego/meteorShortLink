@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { Redirect } from  'react-router-dom';
 
 export default class Login extends React.Component {
@@ -30,10 +30,21 @@ export default class Login extends React.Component {
     }
     render() {
         if (this.state.loggedIn === true) {
-            return <Redirect to="links" />
+            return  <Redirect to="/links" /> 
         } else {
             return (
                 <div className="login-page">
+                    <div>
+                        <ul>
+                            <li>
+                                <NavLink exact activeClassName="active" to="/">
+                                    Home
+                                </NavLink>
+                            </li>
+                        </ul>
+                    </div>
+
+
                     <h1>Login to Short Link</h1>
     
                     {this.state.error ? <p>{this.state.error}</p> : undefined}
