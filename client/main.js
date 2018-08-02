@@ -1,10 +1,20 @@
 import { Meteor } from 'meteor/meteor';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import { renderRoutes, authenticatedPages, unauthenticatedPages } from '../imports/ui/routes';
 import { Tracker } from 'meteor/tracker';
 import history from '../imports/ui/history';
+import {Router, Route, Switch, Redirect} from 'react-router-dom';
+
+// COMPONENTS
+import Links from '../imports/ui/Links';
+import Login from '../imports/ui/Login';
+import Signup from '../imports/ui/Signup';
+import NotFound from '../imports/ui/NotFound';
 
 // authennticated page redirects
+const unauthenticatedPages = ['/', '/signup'];
+const authenticatedPages = ['/links'];
+
 Tracker.autorun(() => {
   const isAuthenticated = !!Meteor.userId();
   const pathname = history.location.pathname;
@@ -17,6 +27,24 @@ Tracker.autorun(() => {
     history.push('/');
   }
 });
+
+const onEnterPublicPage = () => {
+  if (Meteor.userId()) {
+    history.push('/links');
+  }
+};
+
+// routes 
+const renderRoutes = () => (
+  <Router history={history}>
+    <Switch>
+      <Route exact path="/" component={Login}/>
+      <Route exact path="/signup"  component={Signup} />
+      <Route exact path="/links"  component={Links}/>
+      <Route path="*" component={NotFound}/>
+    </Switch>
+  </Router>
+);
 
 Meteor.startup(() => {
   ReactDOM.render(renderRoutes(), document.getElementById('app'));

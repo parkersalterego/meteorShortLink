@@ -1,6 +1,7 @@
+import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { Redirect } from  'react-router-dom';
-import { Acounts } from 'meteor/accounts-base'
+import history from './history';
 
 
 export default class Links extends React.Component {
@@ -10,6 +11,12 @@ export default class Links extends React.Component {
 
         this.state = {
             toRoot: false,
+        }
+    }
+
+    componentWillMount() {
+        if (!Meteor.userId()) {
+            history.push('/');
         }
     }
 
