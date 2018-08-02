@@ -13,15 +13,13 @@ export default class Link extends React.Component {
         super(props);
 
         this.state = {
-            toRoot: false,
+            error: '',
         }
     }
 
     onLogout() {
         Accounts.logout();
-        this.setState({
-            toRoot: true
-        });
+        history.push('/');
     }
 
     onSubmit(e) {
@@ -29,31 +27,36 @@ export default class Link extends React.Component {
 
         const url = this.refs.url.value.trim();
         if (url) {
-            Meteor.call('links.insert', url);
+            Meteor.call('links.insert', url, (err) => {
+                if (err) {
+                    console.log(err);
+                    this.setState({error: err.reason});
+                } else {
+                    this.setState({error: ''});
+                }
+            });
             // Links.insert({url, userId: Meteor.userId()});
             this.refs.url.value = '';
         }
     }
 
     render() {
-        if (this.state.toRoot === true) {
-            return <Redirect to="/" />
-        } else {
-            return (
-                <div>
-                    <h1>Your Links</h1>
-    
-                    <button onClick={() => this.onLogout()}>Logout</button>
+        return (
+            <div>
+                <h1>Your Links</h1>
 
-                    <p>Add Link</p>
-                    <LinksList/>
-                    <form onSubmit={this.onSubmit.bind(this)}>
-                        <input type="text" ref="url" placeholder="URL"/>
-                        <button>Add Link</button>
-                    </form>
+                <button onClick={() => this.onLogout()}>Logout</button>
 
-                </div>
-            );
-        }
+                {this.state.error ? <p className='error-message'>{this.state.error}</p> : undefined}
+
+                <LinksList/>
+                <p>Add Link</p>
+                <form onSubmit={this.onSubmit.bind(this)}>
+                    <input type="text" ref="url" placeholder="URL"/>
+                    <button>Add Link</button>
+                </form>
+
+            </div>
+        );
     }
 }
