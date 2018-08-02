@@ -1,5 +1,6 @@
 import Meteor from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
+import shortid from 'shortid';
 
 export const Links = new Mongo.Collection('links');
 
@@ -19,6 +20,10 @@ meteor.methods({
             throw new meteor.Error(400, 'Your link must be a valid url and contain the protocol (i.e. https://)');
         }
 
-        Links.insert({url, userId: this.userId});
+        Links.insert({
+            _id: shortid.generate(),
+            userId: this.userId,
+            url, 
+        });
     }
 });
