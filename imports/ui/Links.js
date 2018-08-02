@@ -16,7 +16,7 @@ export default class Links extends React.Component {
 
     componentWillMount() {
         if (!Meteor.userId()) {
-            history.push('/');
+            history.replace('/');
         }
     }
 
