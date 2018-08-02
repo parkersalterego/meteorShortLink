@@ -1,6 +1,7 @@
+import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Acounts } from 'meteor/accounts-base'
+import history from './history';
 
 'meteor/accounts-base'
 
@@ -12,6 +13,12 @@ export default class Signup extends React.Component {
     this.state = {
       error: '',
     };
+  }
+
+  componentWillMount() {
+    if (Meteor.userId()) {
+        history.push('/links');
+    }
   }
 
   onSubmit(e) {
