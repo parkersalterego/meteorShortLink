@@ -14,7 +14,9 @@ if (meteor.isServer) {
 meteor.methods({
     'links.insert'(url) {
         if (!this.userId) {
-            throw new Meteor.Error('not-authorized');
+            throw new meteor.Error('not-authorized');
+        } else if (!url.match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#()?&//=]*)/)) {
+            throw new meteor.Error(400, 'Your link must be a valid url and contain the protocol (i.e. https://)');
         }
 
         Links.insert({url, userId: this.userId});
