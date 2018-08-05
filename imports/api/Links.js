@@ -8,7 +8,7 @@ const meteor = Meteor.Meteor;
 
 if (meteor.isServer) {
     meteor.publish('links', function() {
-        return Links.find({userId: this.userId});
+        return Links.find({});
     });
 };
 

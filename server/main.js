@@ -6,7 +6,6 @@ import { Links } from '../imports/api/Links';
 import '../imports/api/users';
 import '../imports/api/Links';
 
-
 Meteor.startup(() => {
   WebApp.connectHandlers.use((req, res, next) => {
     const _id = req.url.slice(1);

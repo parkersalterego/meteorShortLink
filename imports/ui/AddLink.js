@@ -27,6 +27,7 @@ export default class AddLinks extends React.Component {
             this.refs.url.value = '';
         }
     }
+
     render() {
         return (
             <div>
@@ -41,8 +42,5 @@ export default class AddLinks extends React.Component {
             </div>
         );
     }
-}
-                
-                
-                
+}              
                 
