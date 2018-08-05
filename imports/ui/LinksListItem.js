@@ -49,6 +49,7 @@ export default class LinksListItem extends React.Component {
                 <p>{this.props.shortUrl}</p>
                 <p>{this.props.visable.toString()}</p>
                 {this.renderStats()}
+                <a href={this.props.shortUrl} target="_blank">Visit</a>
                 <button ref="copy" data-clipboard-text={this.props.shortUrl}>
                     {this.state.justCoppied ? 'Copied' : 'Copy'}
                 </button>

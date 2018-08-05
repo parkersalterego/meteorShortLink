@@ -1,4 +1,5 @@
 import React from 'react';
+import Modal from 'react-modal';
 import { Meteor } from 'meteor/meteor';
 
 export default class AddLinks extends React.Component {
@@ -7,7 +8,8 @@ export default class AddLinks extends React.Component {
 
         this.state = {
             error: '',
-            url: ''
+            url: '',
+            isOpen: false
         }
     }
 
@@ -18,9 +20,9 @@ export default class AddLinks extends React.Component {
         if (url) {
             Meteor.call('links.insert', url, (err) => {
                 if (err) {
-                    this.setState({error: err.reason, url: ''});
+                    this.setState({error: err.reason, url: '', isOpen: true});
                 } else {
-                    this.setState({error: '', url: ''});
+                    this.handleModalClose();
                 }
             });
             this.refs.url.value = '';
@@ -34,21 +36,39 @@ export default class AddLinks extends React.Component {
         })
     }
 
+    handleModalClose() {
+        this.setState({
+            isOpen: false,
+            url: '', 
+            error: ''
+        });
+    }
+
     render() {
         return (
             <div>
-                {this.state.error ? <p className='error-message'>{this.state.error}</p> : undefined}
-                <p>Add Link</p>
-                <form onSubmit={this.onSubmit.bind(this)}>
-                    <input 
-                        type="text"
-                        ref="url"
-                        placeholder="URL"
-                        value={this.state.url} 
-                        onChange={this.onChange.bind(this)}
-                    />
-                    <button>Add Link</button>
-                </form>
+                <button onClick={() => this.setState({isOpen: true})}>Add Link</button>
+                <Modal 
+                    ariaHideApp={false} 
+                    isOpen={this.state.isOpen} 
+                    contentLabel="Add Link"
+                    onAfterOpen={() => this.refs.url.focus()}
+                    onRequestClose={this.handleModalClose.bind(this)}
+                >
+                    {this.state.error ? <p className='error-message'>{this.state.error}</p> : undefined}
+                    <p>Add Link</p>
+                    <form onSubmit={this.onSubmit.bind(this)}>
+                        <input 
+                            type="text"
+                            ref="url"
+                            placeholder="URL"
+                            value={this.state.url} 
+                            onChange={this.onChange.bind(this)}
+                        />
+                        <button>Add Link</button>
+                    </form>
+                    <button onClick={this.handleModalClose.bind(this)}>Cancel</button>
+                </Modal>
             </div>
         );
     }
