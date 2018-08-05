@@ -25,6 +25,8 @@ meteor.methods({
             userId: this.userId,
             url, 
             visable: true,
+            visitedCount: 0,
+            lastVisitedAt: null,
         });
     },
     'links.setVisibility'(_id ,visable) {
@@ -41,6 +43,13 @@ meteor.methods({
                     $set: {visable: visable}
                 }
             );
+        }
+    },
+    'links.trackVisit'(_id) {
+        if (typeof(_id) !== 'string' || _id.length < 1) {
+            throw new Meteor.Error('invalid id');
+        } else {
+            Links.update(_id, {$set: {lastVisitedAt: new Date().getTime()}, $inc: {visitedCount: 1}})
         }
     }
 });
