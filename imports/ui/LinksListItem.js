@@ -1,3 +1,4 @@
+import Meteor from 'meteor/meteor';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Clipboard from 'clipboard';
@@ -32,10 +33,15 @@ export default class LinksListItem extends React.Component {
             <div>
                 <p>{this.props.url}</p>
                 <p>{this.props.shortUrl}</p>
+                <p>{this.props.visable.toString()}</p>
                 <button ref="copy" data-clipboard-text={this.props.shortUrl}>
                     {this.state.justCoppied ? 'Copied' : 'Copy'}
                 </button>
-                
+                <button onClick={() => {
+                    Meteor.Meteor.call('links.setVisibility', this.props._id, this.props.visable === true ? false : true);
+                }}>
+                    {this.props.visable ? 'Hide' : 'Unhide'}
+                </button>
             </div>
         );
     }
@@ -46,5 +52,6 @@ LinksListItem.propTypes = {
     url: PropTypes.string.isRequired,
     userId: PropTypes.string.isRequired,
     shortUrl: PropTypes.string.isRequired,
+    visable: PropTypes.bool.isRequired,
 
 };

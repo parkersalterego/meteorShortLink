@@ -24,6 +24,23 @@ meteor.methods({
             _id: shortid.generate(),
             userId: this.userId,
             url, 
+            visable: true,
         });
+    },
+    'links.setVisibility'(_id ,visable) {
+        if (!this.userId) {
+            throw new Meteor.Error('not-authorized');
+        } else if (typeof(_id) !== 'string' && _id.length < 1) {
+            throw new Meteor.Error('invalid-id');
+        } else {
+            Links.update(
+                {
+                _id: _id,
+                 userId: this.userId
+                }, {
+                    $set: {visable: visable}
+                }
+            );
+        }
     }
 });

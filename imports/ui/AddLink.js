@@ -1,6 +1,5 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import LinksList from './LinksList';
 
 export default class AddLinks extends React.Component {
     constructor(props) {
@@ -13,7 +12,7 @@ export default class AddLinks extends React.Component {
 
     onSubmit(e) {
         e.preventDefault();
-
+        
         const url = this.refs.url.value.trim();
         if (url) {
             Meteor.call('links.insert', url, (err) => {
@@ -32,8 +31,6 @@ export default class AddLinks extends React.Component {
         return (
             <div>
                 {this.state.error ? <p className='error-message'>{this.state.error}</p> : undefined}
-
-                <LinksList/>
                 <p>Add Link</p>
                 <form onSubmit={this.onSubmit.bind(this)}>
                     <input type="text" ref="url" placeholder="URL"/>
