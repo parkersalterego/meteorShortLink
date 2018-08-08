@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Link, NavLink } from 'react-router-dom';
-import history from '../ui/history';
+import { Link } from 'react-router-dom';
+// import history from '../ui/history';
 
 export default class Login extends React.Component {
 
@@ -33,33 +33,28 @@ export default class Login extends React.Component {
             }
         });
     }
-    register() {
-        history.push('/signup');
-    }
+    // register() {
+    //     history.push('/signup');
+    // }
     render() {
         return (
-            <div className="login-page">
-                <div>
-                    <ul>
-                        <li>
-                            <NavLink exact activeClassName="active" to="/">
-                                Home
-                            </NavLink>
-                        </li>
-                    </ul>
-                </div>
+            <div className="boxed-view">
 
-                <h1>Login to Short Link</h1>
+            <div className="boxed-view__box">
+                <h1>Short Link</h1>
 
                 {this.state.error ? <p className="error-message">{this.state.error}</p> : undefined}
 
-                <form onSubmit={this.onSubmit.bind(this)} noValidate>
+                <form className="boxed-view__form" onSubmit={this.onSubmit.bind(this)} noValidate>
                     <input type="email" ref="email" name="email" placeholder="Email"/>
                     <input type="password" ref="password" name="password" placeholder="Password"/>
-                    <button>Login</button>
+                    <button className="button">Login</button>
                 </form>
 
-                <a href="#" onClick={this.register}>Need an account?</a>
+                {/* <a href="#" onClick={this.register}>Need an account?</a> */}
+                <Link to="/signup">Need an account?</Link>
+            </div>
+
             </div>
         );
     }
